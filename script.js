@@ -17,7 +17,7 @@ function init()
  */
 function generateNameOfCurrentDay()
 {
-	var date = new Date();
+    var date = new Date();
     var day = date.getDay();
     var weekDays = new Array ("Niedziela", "Poniedziałek", "Wtorek", "Środa", "Czwartek", "Piątek", "Sobota");
 			
@@ -112,7 +112,7 @@ function actionOnString()
 						input[index].disabled = true;
 					}
 					document.getElementById("label").removeAttribute("style");
-					document.getElementById("label").style.display = "none";
+					document.getElementById("label").remove();
 					document.getElementById("runTest").value = "Done!";
 					document.getElementById("test").value = "";
 					break;
@@ -120,9 +120,7 @@ function actionOnString()
 					default:
 					alert("błąd");
 				}
-				
-			}
-			
-			}
+		}
+}
 
 	
