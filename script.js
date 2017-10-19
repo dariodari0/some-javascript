@@ -13,7 +13,7 @@ function init()
 }
     			
 /*
- * Dynamicznie generowanie nazwy dnia i kolejnych
+ * Dynamic generate name of current day and nexts
  */
 function generateNameOfCurrentDay()
 {
@@ -46,8 +46,8 @@ function generateNameOfCurrentDay()
 
 
 /*
- * Pobieranie i wyświetlanie informacji o użytkowniku
- */	
+*  get and print info about browser 
+*/	
  function informationsNav()
  {
  		var navigatorInformations = "App Code Name (your browser): "   + navigator.appCodeName + "<br>";
@@ -64,7 +64,7 @@ function generateNameOfCurrentDay()
  }	  
 		
 /*
- * Zabawa metodami substr(); i split();
+ * for fun: substr(); i split();
  */
 function actionOnString()
 {
@@ -85,7 +85,7 @@ function actionOnString()
 		
 
 /*
- * Zabawa: zastowsowanie try..catch i trow wraz z switch
+ *for fun: use try..catch i throw with  switch
  */			
  function runTesting(e)
   			{
