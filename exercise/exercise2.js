@@ -6,7 +6,7 @@
         reverseNumber: function (number)
         {
 			if (number < 0) return Math.abs(number);
-			else if (number > 0 return -Math.abs(number);
+			else if (number > 0) return -Math.abs(number);
 			else return 0;
         },
         squareOrCube: function (array)
