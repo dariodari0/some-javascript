@@ -45,7 +45,7 @@
 		explicitly set. Finally, call and bind except an infinite number of parameters whereas apply takes two 
 		
 		#####################################################################################################################
-CALL : 
+1. CALL : 
 		
 		person.dog.sayHello.call(person); // Hello Dariusz //we are not invoking methods in dog object
 		person.dog.determineContext.call(person); // true
@@ -100,7 +100,7 @@ CALL :
 				
 		#####################################################################################################################
 		
-APPLY (it's almost identical to CALL - except the parameters):
+2. APPLY (it's almost identical to CALL - except the parameters):
 		
 		function addNumbers(a,b,c,d){
 			return "Hi " + this.firstName + ", you just calculated " + (a+b+c+d);
@@ -138,7 +138,7 @@ APPLY (it's almost identical to CALL - except the parameters):
 		
 		#####################################################################################################################
 		
-BIND ( looks like a call, but instead of immediately invoking the function it returns a new function to us with the keyword 'this'):
+3. BIND ( looks like a call, but instead of immediately invoking the function it returns a new function to us with the keyword 'this'):
 
 		function addNumbers(a,b,c,d){
 			return "Hi " + this.firstName + ", you just calculated " + (a+b+c+d);
@@ -177,7 +177,32 @@ BIND ( looks like a call, but instead of immediately invoking the function it re
 			}
 		}
 
+		#####################################################################################################################
+		
+4. NEW keyword:
+ 
+ // The new keyword is used with the function and inside of the function definition. The keyword 'this' will refer to the new object that is created.
+ // When keyword 'new' is used an implicit return 'this' is added to the function which uses it.
+		
+		function Person(firstName, lastName){
+			this.firstName = firstName;
+			this.lastName = lastName;
+		}
+		
+		var dariusz = new Person("Dariusz","Dario");
+		
+		#####################################################################################################################
 		
 		
+		RECAP:
+		
+		1. The keyword 'this' is a reserved keyword in JavaScript and its value is determined at execution.
+		2. It is either set using the global context, object binding, explicit binding, or the new keyword.
+		3. When set in the global context in a function, it is either the global object (window if in the browser) or undefined (if we are using strict mode).
+		4. To explicitly set the value of the keyword 'this', we use call,apply or bind.
+		5. We can also use the 'new' keyword to set the context of 'this'. 
+		
+	
+			
 	
  */
