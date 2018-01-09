@@ -56,10 +56,6 @@ function Person (firstName, lastName, favoriteColor, favoriteNumber){
 }
 
 /* 2 - Add a function on the Person.prototype called fullName that returns the firstName and lastName property of an object created by the Person constructor concatenated together.
-    
-Examples:    
-    var person = new Person("Elie", "Schoppik", "purple", 34)
-    person.fullName() // "Elie Schoppik"
 
 */
 Person.prototype.fullName = function(){
@@ -78,20 +74,7 @@ Person.prototype.addToFamily = function(person){
 	return this.family.length;
 }
 
-/*
-    var person = new Person("Elie", "Schoppik", "purple", 34)
-    var anotherPerson = new Person()
-    person.addToFamily(anotherPerson); // 1
-    person.addToFamily(anotherPerson); // 1
-    person.family.length // 1
-    
-    person.addToFamily("test"); // 1
-    person.addToFamily({}); // 1
-    person.addToFamily([]); // 1
-    person.addToFamily(false); // 1
-    person.family.length // 
-*/
-
+ 
 // PART II 
 
 // 1 - Implement your own version of Array.prototype.map. The function should accept a callback and return a new array with the result of the callback for each value in the array. 
