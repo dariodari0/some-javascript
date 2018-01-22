@@ -1,0 +1,423 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Jasmine Tests</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jasmine/2.6.2/jasmine.css">
+</head>
+<body>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/2.6.2/jasmine.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/2.6.2/jasmine-html.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/2.6.2/boot.js"></script>
+  <script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous">
+  </script>
+  <script>
+const warsaw = {
+	isCapitalOfCountry: true,
+	numberOfFutballStadiums: 7
+}
+
+describe("warsaw", function(){
+ it("isCapitalOfCountry", function(){
+	expect(warsaw.isCapitalOfCountry).toBe(true)
+ });
+ it("Warsaw has seven football stadiums", function(){
+		expect(warsaw.numberOfFutballStadiums).toBe(7)
+ });
+});
+
+describe("Jasmine Matchers", function() {
+    it("allows for === and deep equality", function(){
+	expect(1+1).toBe(2);
+    expect([1,2,3]).toEqual([1,2,3]);
+	});
+	
+	it("allows for easy precision checking", function(){
+	expect(3.1415).toBeCloseTo(3.14,2);
+	});
+	
+	it("truthy / falsy checking", function(){
+	expect(0).toBeFalsy();
+	expect([]).toBeTruthy();
+	});
+	
+	it("content of object chcecking", function(){
+	expect([1,2,3]).toContain(1);
+	expect({name: 'Dariusz'}).toEqual(jasmine.objectContaining({name: 'Dariusz'}));
+	});
+	
+	it("type checking", function(){
+	expect([]).toEqual(jasmine.any(Array));
+	expect(function(){}).toEqual(jasmine.any(Function));
+	});
+});
+
+describe("#push", function(){
+ let arr;
+ beforeEach(function(){
+	arr = [12,2,199];
+ });
+	it("adds elem to an array", function(){
+		//let arr = [12,2,199]; We cen use beforeEach
+		arr.push(2);
+     expect(arr).toEqual([12,2,199,2]);
+	});
+	
+	it("length", function(){
+		//let arr = [12,2,199]; We cen use beforeEach
+	expect(arr.push(2)).toBe(4);
+	});
+	
+	it("anything adds", function(){
+	    //let arr = [12,2,199];  We cen use beforeEach
+	expect(arr.push({})).toBe(4);
+	});
+});
+
+//afterEach expamle:
+
+describe("Counting", function(){
+	let count = 0;
+	
+	beforeEach(function(){
+	 count++
+	});
+	
+	afterEach(function(){
+	 count = 0;
+	});
+	
+	it("increments variable", function(){
+	 expect(count).toBe(1);
+	});
+
+	it("reset variable then gets", function(){
+	 expect(count).toBe(1);
+	});
+	
+});	
+
+// Nesting describe blocks
+describe("Array", function(){
+	let array;
+	beforeEach(function(){
+		array = [12,2,199];
+	});
+	
+	describe("#unshift", function(){
+		it("adds an element to the beginning", function(){
+		 array.unshift(17);
+  		  expect(array[0]).toBe(17);
+		});
+		
+		it("returns the new length", function(){
+		expect(array.unshift(123)).toBe(4);
+		});
+	});	
+	
+	describe("#push", function(){
+		it("adds an element to the end", function(){
+		 array.push(71);
+		  expect(array[array.length-1]).toBe(71);
+		});
+		it("returns the new length", function(){
+		expect(array.push(321)).toBe(4);
+		});
+	});
+});
+
+// if we dont know exactly what we'll be testing or if we do not want to run a specific test
+
+describe("Pending specs", function(){
+
+   xit("can start with an xit", function(){
+    expect(true).toBe(true);
+  });
+
+  it("is a pending test if there is no callback function");
+
+  it("is pending if the pending function is invoked inside the callback", function(){
+    expect(23).toBe(2);
+    pending();
+  });
+
+});
+
+function multiply(a,b) {
+	return a*b;
+}
+//testing result using spies
+describe("multiply", function(){
+	let multiplySpy, result;
+	beforeEach(function(){
+		multiplySpy = spyOn(window, 'multiply').and.callThrough();
+		result = multiplySpy(74,3);
+	})
+	it("is can have params tested", function(){
+		expect(result).toEqual(222);
+		});
+});
+//testing with setTimeout
+describe("a simple setTimeout", function(){
+	let sample;
+	beforeEach(function(){
+		sample = jasmine.createSpy("sampleFunction");
+		jasmine.clock().install();
+	});
+	afterEach(function(){
+		jasmine.clock().uninstall();
+	});
+	
+	it("invoked after 1,5s", function(){
+		setTimeout(function(){
+		 sample();
+		},1500);
+		jasmine.clock().tick(1499);
+		expect(sample).not.toHaveBeenCalled();
+		jasmine.clock().tick(1501);
+		expect(sample).toHaveBeenCalled();
+	});
+});
+// testing async code
+
+function getUserInfo(username){
+  return $.getJSON('https://api.github.com/users/' + username);
+}
+
+describe("#getUserInfo", function(){
+	it("returns the correct name for user", function(){
+	   getUserInfo('dariodari0').then(function(data){
+		expect(data.name).toBe("Dariusz Markowicz");
+		done(); //in callback function
+		});
+	});
+});
+  </script>
+</body>
+</html>
+<script>
+/* KEYWORD Jasmine
+--------- basic structure ------------
+describe - 'let me describe .... to you'
+	  it - 'let me tell you about .....'
+		expect - 'here's what I expect'
+
+EXAMPLE:
+
+describe('Warsaw')
+	it('is capital of Poland')
+	  expect(warsaw.isCapitalOfCountry.toBe(true))
+	it('Warsaw has seven football stadiums.')
+	  expect(warsaw.numberOfFutballStadiums).toBe(7)
+	  
+CODE:
+
+const warsaw = {
+	isCapitalOfCountry: true;
+	numberOfFutballStadiums: 7;
+}
+
+describe("warsaw", function(){
+ it("isCapitalOfCountry", function(){
+	expect(warsaw.isCapitalOfCountry).toBe(true)
+ });
+ it("Warsaw has seven football stadiums", function(){
+		expect(warsaw.numberOfFutballStadiums).toBe(7)
+ });
+});
+
+
+
+------Matchers-------
+Matchers are the function that we attach to the result of the expect function.
+
+tobe / not.toBe
+toBeCloseTo
+toBeDefined
+toBeFalsey / toBeTruthy
+toBeGreaterThan / toBeLessThan
+toContain
+toEqual
+jasmine.any()
+
+CASE:
+
+const a1 = [1,2,3], a2 = [1,2,3];
+
+a1 === a2; //false - the reason is because these objects are different references in memory
+
+const a3 = [], a4 = [];
+
+a3 === a4; // false. So, we always be mindful of how objects are compared using triple equals
+
+//In Jasmine if we want to compare values in an object or array with another we should use to 'toEqual'
+//to remember: typeof doesn't work for arrays since arrays are a type of object. 
+
+describe(" ", function(){
+	it(" ", function(){
+		expect().Matcher();
+		});
+});
+
+EXAMPLES:
+
+
+describe("#push", function(){
+	it("adds elem to an array", function(){
+		let arr = [12,2,199];
+		arr.push(2);
+     expect(arr).toEqual(12,2,199,2]);
+	});
+	
+	it("length", function(){
+		let arr1[12,2,199];
+	expect(arr.push(2)).toBe(4);
+	});
+	
+	it("anything adds", function(){
+	    let arr2 =[12,2,199];
+	expect(arr.push({}).toBe(4);
+	});
+});
+
+//beforeAll
+
+let array = [];
+beforeAll(function(){
+ array = [12,2,199];
+});
+describe("pushing item into an array", function(){
+	it("starts with an array", function(){
+		array.push(10);
+ 
+	});
+	it("keeps mutating that array", function(){
+		console.log(array); //returns [12, 2, 199, 10]
+		array.push(5);
+		expect(1).toBe(1);// for non errors
+	});
+});
+describe("again pushing", function(){
+	it("again - keeps mutating that array", function(){
+	console.log(array); //returns [12, 2, 199, 10, 5] but should be [12, 2, 199] So, we should use Nesting descirbe blocks
+	expect(1).toBe(1);// for non errors
+	});
+});
+	
+Does Jasmine require an additional libraries to get started writing unit tests??
+	Unlike Mocha, Jasmine does not require additional modules/libraries to get started with writing tests
+
+What is the difference between toEqual and toBe?
+	toBe compares with triple equals and toEqual compares different object references as well
+ 
+------------------------------- Spies ------------------------------------------
+
+1. Jasmine has test double functions called spies.
+2. A spy can stub (mimic) any function and track calls to it and all arguments. 	
+3. Spies only exists in the describe or it block in which it is defined.
+4. Spies are removed after each spec.
+5. there are special matchers for interacting with spies.
+
+//creating a spy for function multiply:
+function multiply(a,b) {
+	return a*b;
+}	
+
+describe("multiply", function(){
+	let multiplySpy, result;
+	beforeEach(function(){
+		multiplySpy = spyOn(window, 'multiply');
+		result = multiplySpy();
+	})
+	it("is can have params tested", function(){
+		expect(multiplySpy).toHaveBeenCalled();
+		});
+});
+
+//testing parameters
+describe("multiply", function(){
+	let multiplySpy, result;
+	beforeEach(function(){
+		multiplySpy = spyOn(window, 'multiply');
+		result = multiplySpy(3,74);
+	})
+	it("is can have params tested", function(){
+		expect(multiplySpy).toHaveBeenCalled();
+		expect(multiplySpy).toHaveBeenCalledWith(3,74);
+		});
+});
+
+//test returning a value
+describe("multiply", function(){
+	let multiplySpy, result;
+	beforeEach(function(){
+		multiplySpy = spyOn(window, 'multiply').and.callThrough();
+		result = multiplySpy(74,3);
+	})
+	it("is can have params tested", function(){
+		expect(result).toEqual(222);
+		});
+});
+
+// testing frequency if you want to make sure a function is only called a certain amount of times or only be invoked once
+describe("multiply", function(){
+	let multiplySpy, result;
+	beforeEach(function(){
+		multiplySpy = spyOn(window, 'multiply').and.callThrough();
+		result = multiplySpy(74,3);
+	})
+	it("is can have params tested", function(){
+		expect(multiplySpy.calls.any()).toBe(true); 
+		expect(multiplySpy.calls.count()).toBe(1);
+		expect(result).toEqual(222);
+		});
+});
+
+Is true that using spies instead of original functions can help speed up the time it takes to run a test ? TRUE
+Is true that spies do not allow you to determine how many times a spy was called? FALSE
+
+
+------------------------------- clock ------------------------------------------
+describe("a simple setInterval",function(){
+	let dummyFunc;
+	beforeEach(function(){
+		sample = jasmine.createSpy("dummyFunc");
+		jasmine.clock().install();
+	});
+	afterEach(function(){
+		jasmine.clock().uninstall();
+	});
+	
+	it("invoked after 1,5s", functions(){
+		setInterval(function(){
+		 dummyFunc();
+		},1500);
+		jasmine.clock().tick(1499);
+		expect(dummyFunc.calls.count()).toBe(0);
+		jasmine.clock().tick(1500);
+		expect(dummyFunc.calls.count()).toBe(1);
+		jasmine.clock().tick(1);
+		expect(dummyFunc.calls.count()).toBe(2);
+	});
+});
+
+------------------------------- testing async code ------------------------------------------
+1. Jasmine also has support for running specs that require testing async code
+2. beforeEach, afterEach, beforeAll, afterAll, and it take an optional single argument ('done')
+that should be called when the async work is complete. 
+3. A test will not complete until its 'done' is called.
+
+
+Is true that the Jasmine clock must be installed before using it? true
+Is true that you must name the function that handles asynchronous code “done”? false, We can name parameters whatever we'd like
+Is true that Jasmine will wait 3 seconds for the done callback to run or the test will timeout. This timer can not be modified. false, Jasmine will wait 5 seconds by default and We can modify the internal timer with jasmine.DEFAULT_TIMEOUT_INTERVAL
+When testing asynchronous code with Jasmine, what is the function you must pass as a parameter to the 'it' or before/after callback function commonly called?
+done();
+
+
+
+
+*/
+</script>
